@@ -42,14 +42,15 @@ const rawRequest = async (url, headers, data, timeout) => {
 	const { body } = await got(url, options);
 	const response = JSON.parse(body);
 
-	if(response.error) {
+	if(response.error && response.error.length) {
 		if (Array.isArray(response.error)) {
 			const error = response.error
 				.filter((e) => e.startsWith('E'))
 				.map((e) => e.substr(1));
 			
 			if(!error.length) {
-				throw new Error("Kraken API returned an unknown error");
+				console.log('hasdflkasdfjkl')
+				throw new Error("Kraken API returned an unknown error: " + error);
 			}
 
 			throw new Error(error.join(', '))
